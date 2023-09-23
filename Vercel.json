@@ -1,19 +1,11 @@
 {
     "version": 2,
-    "name": "van-api",
-    "runtime": "python",
-    "build": {
-      "commands": [
-        "pip install -r requirements.txt"
-      ]
-    },
-    "functions": {
-      "api/data": {
-        "src": "Server.py"
-      },
-      "api/pir": {
-        "src": "Server.py"
-      }
-    }
-  }
-  
+    "builds": [
+        { "src": "api/api.py", "use": "@now/python" }
+    ],
+    "routes": [
+        { "src": "/api/data", "dest": "api/api.py" },
+        { "src": "/api/pir", "dest": "api/api.py" },
+        { "src": "/(.*)", "dest": "api/api.py" }
+    ]
+}
