@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "name": "van-api",
+    "runtime": "python",
+    "build": {
+      "commands": [
+        "pip install -r requirements.txt"
+      ]
+    },
+    "functions": {
+      "api/data": {
+        "src": "Server.py"
+      },
+      "api/pir": {
+        "src": "Server.py"
+      }
+    }
+  }
+  
