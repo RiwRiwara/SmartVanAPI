@@ -7,11 +7,13 @@ from bson import json_util
 import json
 from datetime import datetime
 import pymongo
+from Constant import Constants
 
-uri = "mongodb+srv://riwara:Gso0u8f4JMR36d5G@newcluster.fxldupt.mongodb.net/?retryWrites=true&w=majority"
+
+uri = Constants["MONGODB_URL"]
 client = MongoClient(uri, server_api=ServerApi('1'))
-db = client['testDB'] 
-collection = db['pirdata']
+db = client[Constants["MONGODB_DB"]] 
+collection = db[Constants["MONGODB_COLLECTION_PIR"]]
 
 @sensorAPI.route('/', methods=['GET'])
 def api_entry():

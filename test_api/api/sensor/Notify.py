@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify
 import requests
 from . import sensorAPI
+from Constant import Constants
 
-LINE_NOTIFY_TOKEN = "alVyzHhpd8jL8ZbAH3aUxPmyEc0bdsms5KYKh6HjiOe"
-LINE_NOTIFY_API_URL = "https://notify-api.line.me/api/notify"
+
+LINE_NOTIFY_TOKEN = Constants["LINE_NOTIFY_TOKEN"]
+LINE_NOTIFY_API_URL = Constants["LINE_NOTIFY_API_URL"]
 
 @sensorAPI.route('/send_notification', methods=['POST'])
 def send_notification():
