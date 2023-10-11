@@ -1,11 +1,5 @@
 {
-    "version": 2,
-    "builds": [
-        { "src": "api/api.py", "use": "@now/python" }
-    ],
-    "routes": [
-        { "src": "/api/data", "dest": "api/api.py" },
-        { "src": "/api/pir", "dest": "api/api.py" },
-        { "src": "/(.*)", "dest": "api/api.py" }
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/test_api/main" }
     ]
-}
+  }
