@@ -1,5 +1,11 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/test_api/main" }
+    "version": 2,
+    "builds": [
+        { "src": "test_api/main.py", "use": "@now/python" }
+    ],
+    "routes": [
+        { "src": "/test_api", "dest": "main.py" },
     ]
-  }
+}
+
+
