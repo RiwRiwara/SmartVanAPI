@@ -8,3 +8,8 @@ def api_entry():
         'data': "API Running"
     }
     return jsonify(response)
+
+# @defaultAPI.route('/get-cam', methods=['GET'])
+# def api_getvideo():
+
+#     return 0
