@@ -40,9 +40,10 @@ def post_data_to_pir():
         data = request.json
         sensor_id = data.get('sensor_id')
         status = data.get('status')
+        van_id = data.get('van_id')
         val = data.get('value')
 
-        pir_data = PirData(sensor_id, status, val)
+        pir_data = PirData(sensor_id, status, van_id, val)
         collection.insert_one(pir_data.__dict__)
         
         message = '{} Update!'.format(sensor_id)
