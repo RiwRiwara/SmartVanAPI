@@ -25,7 +25,9 @@ def api_entry():
 @sensorAPI.route('/get-pir', methods=['GET'])
 def get_pir_by_id():
     sensor_id = request.args.get('sensor_id')
-    pir_data = collection.find({'sensor_id': sensor_id}).sort('timestamp', pymongo.DESCENDING).limit(1)
+    van_id = request.args.get('van_id')
+    pir_data = collection.find({'sensor_id': sensor_id, 'van_id': van_id})
+
 
     if pir_data:
         pir_data_json = json_util.dumps(pir_data[0])

@@ -24,6 +24,14 @@ def findvanbyid():
 @vanDataAPI.route('/get-van', methods=['GET'])
 def get_van_by_id():
     van_id = request.args.get('van_id')
+    if not van_id:
+        vans = collection.find()
+        if vans:
+            vans_json = json_util.dumps(vans)
+            return vans_json, 200, {'Content-Type': 'application/json'}
+        else:
+            return jsonify({'message': 'Van not found'}), 404
+    
     van = collection.find_one({'van_id': van_id})
     if van:
         van_json = json_util.dumps(van)

@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 import requests
 from . import sensorAPI
 from Constant import Constants
+import datetime
+import json
 
 
 LINE_NOTIFY_TOKEN = Constants["LINE_NOTIFY_TOKEN"]
@@ -10,16 +12,35 @@ LINE_NOTIFY_API_URL = Constants["LINE_NOTIFY_API_URL"]
 @sensorAPI.route('/send_notification', methods=['POST'])
 def send_notification():
     message = request.form.get('message')
-    is_enable = request.form.get('isEnable') # 0: disable, 1: enable
-    
-    if is_enable == "0":
+    vanID = request.form.get('vanID')
+
+    van_api_url = f'http://{Constants["HOST"]}:{Constants["PORT"]}/api/van/get-van?van_id={vanID}'
+    vandata = requests.get(van_api_url).json()
+    vanOBJ = vandata
+
+    DateNowStr = datetime.datetime.now().strftime("%d/%m/%Y")
+    TimeNowStr = datetime.datetime.now().strftime("%H:%M:%S")
+    if vanOBJ['isOpenNotification'] == "0":
         return jsonify({"message": "Notification sending is not enabled"}), 400
 
     headers = {
         'Authorization': f'Bearer {LINE_NOTIFY_TOKEN}',
     }
 
-    payload = {'message': message}
+    
+
+    payload = {'message': "\nวันที่ : "+DateNowStr+"\n"+
+                          "เวลา : "+TimeNowStr+"\n"+
+                          "ข้อความ : "+  message + "\n"+
+                          f"""----- [ข้อมูลรถ] -----
+ชื่อคนขับ {vanOBJ['driver_name']}
+ทะเบียนรถ {vanOBJ['van_id']}
+Video 1 : {Constants['CAM1_URL']}
+Video 2 : {Constants['CAM2_URL']}
+----- ดูข้อมูลเพิ่มเติม ----- 
+http://{Constants['HOST']}:{Constants['PORT_FRONTEND']}/van/{vanOBJ['van_id']}
+"""
+                          }
 
     try:
         response = requests.post(LINE_NOTIFY_API_URL, headers=headers, data=payload)
