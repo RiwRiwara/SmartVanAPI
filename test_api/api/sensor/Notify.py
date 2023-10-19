@@ -34,6 +34,7 @@ def send_notification():
                           "ข้อความ : "+  message + "\n"+
                           f"""----- [ข้อมูลรถ] -----
 ชื่อคนขับ {vanOBJ['driver_name']}
+เบอร์โทรศัพท์ {vanOBJ['status']}
 ทะเบียนรถ {vanOBJ['van_id']}
 Video 1 : {Constants['CAM1_URL']}
 Video 2 : {Constants['CAM2_URL']}
